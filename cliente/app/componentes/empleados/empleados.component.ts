@@ -16,14 +16,22 @@ export class EmpleadosComponent implements OnInit {
         this.empleadosService
             .getEmpleados()
             .then(data => {
-            this.empleados = data;
-            console.log(this.empleados);
+                this.empleados = data;
+                console.log(this.empleados);
             })
             .catch(error => this.error = error);
     }
 
     ngOnInit() {
         this.getEmpleados();
+    }
 
+    enviarApellido(apellido: string) {
+        let empleado = {
+            id: 27,
+            apellido: apellido
+        }
+        this.empleadosService
+            .postEmpleados(empleado)
     }
 }

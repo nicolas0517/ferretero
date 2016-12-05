@@ -4,5 +4,7 @@ from ferretero import views
 
 urlpatterns = [
     url(r'^datos', views.datos_nuevos, name='datos_nuevos'),
-    url(r'^regiones', views.regiones, name='regiones')
+    url(r'^regiones', views.regiones, name='regiones'),
+    url(r'^departamentos', views.departamentos, name='departamentos'),
+    url(r'^agregar', views.agregar, name='agregar')
 ]

@@ -1,5 +1,7 @@
 <ul>
     <li *ngFor="let empleado of empleados">
-        {{empleado.first_name}} {{empleado.last_name}}
+        {{empleado.name}} {{empleado.id}}
     </li>
 </ul>
+<input type="text" #apellido>
+<button (click)="enviarApellido(apellido.value); apellido.value=''">Envíar</button>
