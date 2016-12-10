@@ -5,9 +5,12 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { EmpleadosComponent } from './componentes/empleados/empleados.component';
+import { LandingComponent } from './componentes/landing/landing.component';
+import { LoginComponent } from './componentes/login/login.component';
 import { routes } from './app.routes';
 
 import { EmpleadosService } from './componentes/empleados/empleados.service';
+import { LoginService } from './componentes/login/login.service';
 
 @NgModule({
     imports: [ 
@@ -19,10 +22,13 @@ import { EmpleadosService } from './componentes/empleados/empleados.service';
     exports: [],
     declarations: [ 
         AppComponent,
-        EmpleadosComponent
+        EmpleadosComponent,
+        LandingComponent,
+        LoginComponent
     ],
     providers: [
-        EmpleadosService
+        EmpleadosService,
+        LoginService
     ],
     bootstrap: [ AppComponent ]
 })
