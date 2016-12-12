@@ -12,6 +12,10 @@ export class EmpleadosComponent implements OnInit {
 
     constructor(private empleadosService: EmpleadosService) { }
 
+    ngOnInit() {
+        this.getEmpleados();
+    }
+
     getEmpleados() {
         this.empleadosService
             .getEmpleados()
@@ -20,10 +24,6 @@ export class EmpleadosComponent implements OnInit {
                 console.log(this.empleados);
             })
             .catch(error => this.error = error);
-    }
-
-    ngOnInit() {
-        this.getEmpleados();
     }
 
     enviarApellido(apellido: string) {

@@ -7,12 +7,11 @@
         </div>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                {{diagnostic}}
-                <form (ngSubmit)="onSubmit()" #ordenDeCompraForm="ngForm">
+                <form (ngSubmit)="enviarOrden()" #ordenDeCompraForm="ngForm">
                     <div class="row control-group">
                         <div class="form-group col-xs-12">
                             <label for="numero">No. Orden</label>
-                            <input type="text" class="form-control" placeholder="No. Orden" id="numero" required disabled [(ngModel)]="orden_de_compra.numero" name="numero" #numero="ngModel">
+                            <input type="text" class="form-control" placeholder="No. Orden" id="numero" required disabled [(ngModel)]="numero_transaccion" name="numero" #numero="ngModel">
                         </div>
                         <div [hidden]="numero.valid || numero.pristine" class="alert alert-danger"> 
                             Número de orden requerido
@@ -21,37 +20,46 @@
                     <div class="row control-group">
                         <div class="form-group col-xs-12">
                             <label for="fecha">Fecha</label>
-                            <input type="text" class="form-control" placeholder="Fecha" id="fecha" required disabled [(ngModel)]="orden_de_compra.fecha" name="fecha">
+                            <input type="text" class="form-control" placeholder="Fecha" id="fecha" required disabled [(ngModel)]="transaccion.fecha" name="fecha">
                         </div>
                     </div>
                     <div class="row control-group">
                         <div class="form-group col-xs-12">
                             <label for="empleado">Empleado</label>
-                            <input type="text" class="form-control" placeholder="Empleado" id="empleado" required disabled [(ngModel)]="orden_de_compra.empleado" name="empelado">
+                            <input type="text" class="form-control" placeholder="Empleado" id="empleado" required disabled [(ngModel)]="transaccion.empleado" name="empleado">
                         </div>
                     </div>
                     <div class="row control-group">
-                        <div class="form-group col-xs-12">
+                        <div class="form-group col-xs-10">
                             <label for="proveedor">Proveedor</label>
-                            <select class="form-control"  id="proveedor" required [(ngModel)]="orden_de_compra.proveedor" name="proveedor">
-                                <option *ngFor="let proveedor of proveedores" [value]="proveedor.cedula">{{proveedor.cedula}}, {{proveedor.nombre}}</option>
-                            </select>
+                            <input type="number" class="form-control" placeholder="Cedula proveedor" id="proveedor" required #proveedorinput>
+                        </div>
+                        <div class="form-group col-xs-2 text-center">
+                            <button type="button" class="btn btn-success btn-md" (click)="getProveedor(proveedorinput.value)">Buscar</button>
+                        </div>
+                        <div class="col-xs-12" *ngIf="proveedor.length > 0">
+                            <p>Cedula: {{proveedor[0].cedula}}</p>
+                            <p>Nombre: {{proveedor[0].nombre}}</p>
+                            <p>Dirección: {{proveedor[0].valor}}</p>
+                            <p>Teléfono: {{proveedor[1].valor}}</p>
+                        </div>
+                        <div class="col-xs-12" *ngIf="proveedor.length == 0">
+                            <p>{{mensaje}}</p>
                         </div>
                     </div>
-                    {{diagnostic2}}
                     <h3>Detalle</h3>
                     <form (ngSubmit)="agregarProducto()" #productoForm="ngForm">
                         <div class="row control-group">
                             <div class="form-group col-xs-12">
-                                <label for="precio">Item</label>
-                                <input type="number" class="form-control" placeholder="{{contador_item}}" id="precio" disabled>
+                                <label for="item">Item</label>
+                                <input type="number" class="form-control" placeholder="{{contador_item}}" id="item" disabled>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12">
                                 <label for="producto">Producto</label>
-                                <select class="form-control" id="producto" required [(ngModel)]="item.producto" name="producto">
-                                    <option *ngFor="let producto of productos" [value]="producto.cedula">{{producto.cedula}}, {{producto.nombre}}</option>
+                                <select class="form-control" id="producto" required [(ngModel)]="item.idcatalogo" name="producto">
+                                    <option *ngFor="let producto of productos" [value]="producto.idcatalogo">{{producto.nombre}}</option>
                                 </select>
                             </div>
                         </div>
@@ -64,7 +72,7 @@
                         <div class="row control-group">
                             <div class="form-group col-xs-12">
                                 <label for="cantidad">Cantidad</label>
-                                <input type="number" class="form-control" placeholder="Cantidad" id="cantidad" required [(ngModel)]="item.cantidad" name="cantidad" #cantidad="ngModel">
+                                <input type="text" class="form-control" placeholder="Cantidad" id="cantidad" required [(ngModel)]="item.cantidad" name="cantidad" #cantidad="ngModel">
                             </div>
                             <div [hidden]="cantidad.valid || cantidad.pristine" class="alert alert-danger"> 
                                 Cantidad requerida
@@ -81,15 +89,15 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <label>Productos</label>
-                            <div *ngFor="let item of orden_de_compra.items">
-                                <p>#{{item.item}} / {{item.producto}} / Precio: {{item.precio}} / Cantidad: {{item.cantidad}}</p>
+                            <div *ngFor="let item of items">
+                                <p>#{{item.item}} - Producto: {{item.idcatalogo}} - Cantidad: {{item.cantidad}}</p>
                             </div>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="form-group col-xs-12 text-center">
-                            <button type="submit" class="btn btn-success btn-lg" [disabled]="!ordenDeCompraForm.form.valid">Enviar</button>
+                            <button type="submit" class="btn btn-success btn-lg">Enviar</button>
                         </div>
                     </div>
                 </form>

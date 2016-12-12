@@ -1,0 +1,113 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Factura de Compra</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <form (ngSubmit)="totalizar(ordeninput.value)" #facturaCompraForm="ngForm">
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12">
+                            <label for="numero">No. Orden</label>
+                            <input type="text" class="form-control" placeholder="No. Orden" id="numero" required disabled [(ngModel)]="numero_transaccion" name="numero" #numero="ngModel">
+                        </div>
+                        <div [hidden]="numero.valid || numero.pristine" class="alert alert-danger"> 
+                            Número de orden requerido
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12">
+                            <label for="fecha">Fecha</label>
+                            <input type="text" class="form-control" placeholder="Fecha" id="fecha" required disabled [(ngModel)]="factura.fecha" name="fecha">
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12">
+                            <label for="empleado">Empleado</label>
+                            <input type="text" class="form-control" placeholder="Empleado" id="empleado" required disabled [(ngModel)]="factura.empleado" name="empleado">
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <p>Proveedor</p>
+                        <div class="col-xs-12" *ngIf="proveedor.length > 0">
+                            <p>Cedula: {{proveedor[0].cedula}}</p>
+                            <p>Nombre: {{proveedor[0].nombre}}</p>
+                            <p>Dirección: {{proveedor[0].valor}}</p>
+                            <p>Teléfono: {{proveedor[1].valor}}</p>
+                        </div>
+                        <div class="col-xs-12" *ngIf="proveedor.length == 0">
+                            <p>{{mensaje}}</p>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-10">
+                            <label for="orden_compra">Orden de compra</label>
+                            <input type="number" class="form-control" placeholder="Orden de compra" id="orden_compra" required #ordeninput>
+                        </div>
+                        <div class="form-group col-xs-2 text-center">
+                            <button type="button" class="btn btn-success btn-md" (click)="getDetalle(ordeninput.value)">Buscar</button>
+                        </div>
+                        <div class="col-xs-12" *ngIf="detalles.length > 0">
+                            <form (ngSubmit)="eliminarProducto(detalle.iddetalletransaccion,ordeninput.value)" #eliminarForm="ngForm" *ngFor="let detalle of detalles; let i = index">
+                                <div class="row control-group">
+                                    <div class="form-group col-xs-12">
+                                        <label for="item">Item</label>
+                                        <input type="number" class="form-control" placeholder="{{i+1}}" id="item" disabled>
+                                    </div>
+                                </div>
+                                <div class="row control-group">
+                                    <div class="form-group col-xs-12">
+                                        <label for="nombre">Producto</label>
+                                        <input type="text" class="form-control" placeholder="Nombre producto" id="nombre" disabled [(ngModel)]="detalle.nombre" name="nombre" #nombre="ngModel">
+                                    </div>
+                                </div>
+                                <div class="row control-group">
+                                    <div class="form-group col-xs-12">
+                                        <label for="precio">Precio</label>
+                                        <input type="number" class="form-control" placeholder="No establecido" id="precio" [(ngModel)]="item.precio[i]" name="precio">
+                                    </div>
+                                </div>
+                                <div class="row control-group">
+                                    <div class="form-group col-xs-12">
+                                        <label for="cantidad">Cantidad</label>
+                                        <input type="text" class="form-control" placeholder="Cantidad" id="cantidad" required [(ngModel)]="detalle.cantidad" name="cantidad">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="form-group col-xs-12 text-center">
+                                        <button type="submit" class="btn btn-success btn-lg">Eliminar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-xs-12" *ngIf="detalles.length == 0">
+                            <p>{{mensaje2}}</p>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12">
+                            <label for="doc_proveedor">Documento proveedor</label>
+                            <input type="number" class="form-control" placeholder="# Documento" id="doc_proveedor" required [(ngModel)]="item.doc_proveedor" name="doc_proveedor">
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12">
+                            <label for="total_factura">Total factura</label>
+                            <input type="number" class="form-control" placeholder="Total factura" id="total_factura" disabled [(ngModel)]="item.total_factura" name="total_factura">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="form-group col-xs-12 text-center">
+                            <button type="submit" class="btn btn-success btn-lg">Totalizar</button>
+                            <button type="button" class="btn btn-success btn-lg" (click)="nuevaFactura()">Nueva Factura</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

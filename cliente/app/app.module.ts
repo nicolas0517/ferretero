@@ -15,6 +15,7 @@ import { routes } from './app.routes';
 import { EmpleadosService } from './componentes/empleados/empleados.service';
 import { LoginService } from './componentes/login/login.service';
 import { OrdenDeCompraService } from './componentes/orden_de_compra/orden_de_compra.service';
+import { FacturaCompraService } from './componentes/factura_compra/factura_compra.service';
 
 @NgModule({
     imports: [ 
@@ -36,7 +37,8 @@ import { OrdenDeCompraService } from './componentes/orden_de_compra/orden_de_com
     providers: [
         EmpleadosService,
         LoginService,
-        OrdenDeCompraService
+        OrdenDeCompraService,
+        FacturaCompraService
     ],
     bootstrap: [ AppComponent ]
 })
