@@ -41,33 +41,6 @@ def get_proveedor(request):
 	else:
 		return HttpResponseBadRequest('No get method')
 
-def proveedor(request):
-	if request.method == 'GET':
-		r = request.GET.get
-		proveedor = int(r('proveedor'))
-		contrasena_emp = int(r('contrasena_emp'))
-		if id_emp == 3456767 and contrasena_emp == 123456789:
-			try:
-				cursor = connection.cursor()
-				listcontext = []
-				for c in cursor.execute("select emp.id_emp, emp.nombre_emp, emp.nombre_emp, emp.apellido_emp,emp.telefono_emp, emp.correo_emp, cont.des_cont from empleado emp,contrato cont where emp.id_emp=3456767 and emp.contrasena_emp=123456789 and cont.id_emp=emp.id_emp and cont.des_cont='Administrador'"):
-					context = {}
-					context['id_emp'] = c[0]
-					context['nombre_emp'] = c[1]
-					context['nombre_emp'] = c[2]
-					context['apellido_emp'] = c[3]
-					context['telefono_emp'] = c[4]
-					context['correo_emp'] = c[5]
-					context['des_cont'] = c[6]
-					listcontext.append(context)
-			except:
-				return HttpResponseBadRequest('Bad Request')
-			return JsonResponse(listcontext, safe=False)
-		else:
-			return HttpResponse('usuario o clave incorrecta')
-	else:
-		return HttpResponseBadRequest('NOT GET METHOD')
-
 def post_transaccion(request):
 	if request.method == 'POST':
 		data = request.body
@@ -183,3 +156,25 @@ def post_inventario(request):
 		return HttpResponse('successful')
 	else:
 		return HttpResponseBadRequest('mal')
+
+def login(request):
+	if request.method == 'GET':
+		r = request.GET.get
+		user = (r('usuario'))
+		password = int(r('password'))
+		if user == "Sergio Lima" and password == 2345:
+			try:
+				cursor = connection.cursor()
+				listcontext = []
+				for c in cursor.execute("select id_empleado, nom_empleado from empleado where contrasena = '2345'"):
+					context = {}
+					context['id'] = c[0]
+					context['nombre'] = c[1]
+					listcontext.append(context)
+			except:
+				return HttpResponseBadRequest('Bad Request')
+			return JsonResponse(listcontext, safe=False)
+		else:
+			return HttpResponse('Usuario o clave incorrecta')
+	else:
+		return HttpResponseBadRequest('NOT GET METHOD')

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { LoginService, User} from './login.service';
+
 @Component({
     moduleId: module.id,
     selector: 'login',
@@ -8,21 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-    credenciales = {
-        usuario: "",
-        password: ""
+    public user = new User('','');
+    public errorMsg = '';
+ 
+    constructor(
+        private _service:LoginService) {}
+ 
+    login() {
+        if(!this._service.login(this.user)){
+            this.errorMsg = 'Failed to login';
+        }
     }
-    submitted = false;
-
-    constructor() { }
 
     ngOnInit() { }
 
-    onSubmit() {
-        this.submitted = true;
-        console.log(this.credenciales);
-    }
-
-    // TODO: Remove this when we're done
-    get diagnostic() { return JSON.stringify(this.credenciales); }
 }

@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^eliminar_producto', views.eliminar_producto, name='eliminar_producto'),
     url(r'^post_factura', views.post_factura, name='post_factura'),
     url(r'^post_item_factura', views.post_item_factura, name='post_item_factura'),
-    url(r'^post_inventario', views.post_inventario, name='post_inventario')
+    url(r'^post_inventario', views.post_inventario, name='post_inventario'),
+    url(r'^login', views.login, name='login')
 ]
